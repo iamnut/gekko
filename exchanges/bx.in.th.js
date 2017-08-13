@@ -12,9 +12,17 @@ var Trader = function(config) {
     this.clientID = config.username;
   }
   this.name = 'BX.in.th';
+  this.asset = config.asset;
+  this.currency = config.currency;
 
-  this.pair = 1; // todo
+  var numberofpairs = {
+    THBBTC: 1,
+    THBETH: 21,
+    THBXRP: 25,
+    THBOMG: 26
+  };
 
+  this.pair = numberofpairs[this.currency + this.asset];
   this.bitexthai = new BitexthaiAPI(this.key, this.secret, this.clientID);
 }
 
@@ -74,13 +82,15 @@ Trader.getCapabilities = function () {
     name: 'BX.in.th',
     slug: 'bx.in.th',
     currencies: ['THB'],
-    assets: ['BTC'],
+    assets: ['BTC', 'ETH', 'XRP', 'OMG'],
     markets: [
-      {
-        pair: ['THB', 'BTC'], minimalOrder: { amount: 0.0001, unit: 'asset' },
-      }
+      { pair: ['THB', 'BTC'], minimalOrder: { amount: 0.0001, unit: 'asset' } },
+      { pair: ['THB', 'ETH'], minimalOrder: { amount: 0.0001, unit: 'asset' } },
+      { pair: ['THB', 'XRP'], minimalOrder: { amount: 0.0001, unit: 'asset' } },
+      { pair: ['THB', 'OMG'], minimalOrder: { amount: 0.0001, unit: 'asset' } }
     ],
     requires: ['key', 'secret'],
+    tid: 'tid',
     tradeError: 'NOT IMPLEMENTED YET',
     providesHistory: false
   };
